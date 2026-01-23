@@ -17,7 +17,7 @@ load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 # ================= CONFIG =================
 TRADINGVIEW_SCAN_URL = os.getenv("TRADINGVIEW_SCAN_URL") or "https://scanner.tradingview.com/{market}/scan?label-product=screener-stock-old"
 # ✅ เพิ่ม DR_LIST_URL เพื่อใช้ดึงรายชื่อหุ้นที่มี DR
-DR_LIST_URL = os.getenv("DR_LIST_URL")
+DR_LIST_URL = "http://172.17.1.85:8333/dr"
 # ✅ เพิ่มการตั้งค่าเปิด-ปิดฟิลเตอร์ DR (True = กรองเฉพาะหุ้นที่มี DR, False = เอาหุ้นทั้งหมด)
 ENABLE_DR_FILTER = os.getenv("ENABLE_DR_FILTER", "True").lower() == "true"
 CACHE_FILE = "earnings_cache.json"
