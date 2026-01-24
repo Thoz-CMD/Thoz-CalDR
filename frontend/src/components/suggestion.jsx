@@ -946,8 +946,8 @@
         <div className="w-full max-w-[1248px] flex flex-col h-full">
           <div className="pt-6 md:pt-10 pb-0 px-4 md:px-0 flex-shrink-0" style={{ overflow: 'visible', zIndex: 100 }}>
             <div className="w-full md:w-[1040px] max-w-full mx-auto md:scale-[1.2] md:origin-top" style={{ overflow: 'visible' }}>
-              <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-black">Suggestion</h1>
-              <p className="text-[#6B6B6B] mb-6 md:mb-8 text-sm md:text-base">Technical Ratings (Underlying Assets)</p>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 md:mb-3 text-black">Suggestion</h1>
+              <p className="text-[#6B6B6B] mb-4 sm:mb-6 md:mb-8 text-xs sm:text-sm md:text-base">Technical Ratings (Underlying Assets)</p>
 
               {/* Filters Row */}
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 mb-2">

@@ -1,0 +1,23 @@
+{
+  "name": "thoz-caldr",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cal-DR Project - Stock Depositary Receipt calculation and tracking system",
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "preview": "cd frontend && npm run preview",
+    "lint": "cd frontend && npm run lint",
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && pip install -r requirements.txt"
+  },
+  "workspaces": [],
+  "keywords": [
+    "dr",
+    "depositary-receipt",
+    "stock",
+    "calculation"
+  ],
+  "author": "",
+  "license": "MIT"
+}

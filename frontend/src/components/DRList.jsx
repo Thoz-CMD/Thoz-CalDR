@@ -365,17 +365,17 @@ export default function DRList() {
   ─────────────────────────────────────────────── */
   const renderControlBar = () => {
     return (
-      <div className="flex flex-col gap-3 mb-4 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className="relative z-[200] flex-1 sm:flex-initial sm:w-auto" ref={countryDropdownRef} style={{ isolation: 'isolate', overflow: 'visible' }}>
+      <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 mb-3 md:mb-4 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
+        <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 w-full lg:w-auto overflow-x-auto pb-1">
+          <div className="relative z-[200] flex-1 sm:flex-initial sm:w-auto min-w-[140px]" ref={countryDropdownRef} style={{ isolation: 'isolate', overflow: 'visible' }}>
             <button
               type="button"
               onClick={() => setShowCountryMenu((prev) => !prev)}
-              className="flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs sm:text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0B102A] w-full sm:min-w-[180px] h-[37.33px]"
+              className="flex items-center justify-between gap-2 sm:gap-3 rounded-xl border border-gray-200 bg-white px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs md:text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#0B102A] w-full sm:min-w-[160px] md:min-w-[180px] h-[35px] md:h-[37.33px]"
             >
-              <span className="truncate">{selectedCountryOption.label}</span>
+              <span className="truncate text-[11px] sm:text-xs md:text-sm">{selectedCountryOption.label}</span>
               <svg
-                className={`h-4 w-4 flex-shrink-0 transition-transform ${showCountryMenu ? "rotate-180" : ""}`}
+                className={`h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 transition-transform`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -386,7 +386,7 @@ export default function DRList() {
             {showCountryMenu && (
               <div
                 ref={dropdownMenuRef}
-                className="absolute left-0 top-full z-[9999] mt-2 w-full sm:w-56 max-h-72 overflow-auto rounded-2xl border border-gray-200 bg-white shadow-[0_10px_30px_rgba(15,23,42,0.15)] py-1"
+                className="absolute left-0 top-full z-[9999] mt-1 w-full sm:w-56 max-h-60 md:max-h-72 overflow-auto rounded-2xl border border-gray-200 bg-white shadow-[0_10px_30px_rgba(15,23,42,0.15)] py-1"
                 style={{ transform: 'translateZ(0)' }}
               >
                 {countryOptions.map((opt) => (
@@ -396,11 +396,11 @@ export default function DRList() {
                       setCountryFilter(opt.code);
                       setShowCountryMenu(false);
                     }}
-                    className={`flex w-full items-center justify-between px-4 py-1.5 text-left text-xs sm:text-sm transition-colors ${opt.code === countryFilter ? "bg-[#EEF2FF] text-[#0B102A] font-semibold" : "text-gray-700 hover:bg-gray-50"
+                    className={`flex w-full items-center justify-between px-3 sm:px-4 py-1 sm:py-1.5 text-left text-[11px] sm:text-xs md:text-sm transition-colors ${opt.code === countryFilter ? "bg-[#EEF2FF] text-[#0B102A] font-semibold" : "text-gray-700 hover:bg-gray-50"
                       }`}
                   >
                     <span>{opt.label}</span>
-                    {opt.code === countryFilter && <i className="bi bi-check-lg text-[#0B102A] text-base"></i>}
+                    {opt.code === countryFilter && <i className="bi bi-check-lg text-[#0B102A] text-sm"></i>}
                   </button>
                 ))}
               </div>
@@ -410,7 +410,7 @@ export default function DRList() {
           <button
             type="button"
             onClick={() => setDrFilter((prev) => (prev === "watchlist" ? "all" : "watchlist"))}
-            className={`flex items-center gap-2 rounded-xl px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium shadow-sm border transition-colors justify-center shrink-0 h-[37.33px] ${drFilter === "watchlist"
+            className={`flex items-center gap-1.5 sm:gap-2 rounded-xl px-2.5 sm:px-3 md:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs md:text-sm font-medium shadow-sm border transition-colors justify-center shrink-0 h-[35px] md:h-[37.33px] whitespace-nowrap ${drFilter === "watchlist"
               ? "bg-[#0B102A] border-[#0B102A] text-white"
               : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
               }`}
@@ -418,28 +418,28 @@ export default function DRList() {
             <i
               className={drFilter === "watchlist" ? "bi bi-star-fill text-yellow-400" : "bi bi-star text-gray-400"}
             />
-            <span>Watchlist</span>
+            <span className="hidden sm:inline">Watchlist</span>
           </button>
         </div>
 
-        <div className="flex items-center w-full lg:w-auto gap-2 sm:gap-3">
+        <div className="flex items-center w-full lg:w-auto gap-1.5 sm:gap-2 md:gap-3">
           <div className="relative flex-1 lg:flex-initial">
             <input
               type="text"
-              placeholder="Search DR..."
+              placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-white pl-3 sm:pl-4 pr-10 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0B102A] focus:border-transparent w-full lg:w-64 text-xs sm:text-sm shadow-sm h-[37.33px]"
+              className="bg-white pl-2.5 sm:pl-3 md:pl-4 pr-8 py-1.5 sm:py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0B102A] focus:border-transparent w-full lg:w-64 text-[11px] sm:text-xs md:text-sm shadow-sm h-[35px] md:h-[37.33px]"
             />
             <i
-              className="bi bi-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-              style={{ fontSize: 14 }}
+              className="bi bi-search absolute right-2.5 sm:right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+              style={{ fontSize: "12px" }}
             />
           </div>
           <div className="shrink-0">
             <button
               onClick={() => setShowSettings(true)}
-              className="flex items-center gap-1 sm:gap-2 bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 rounded-xl px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium shadow-sm transition-all h-[37.33px]"
+              className="flex items-center gap-1 sm:gap-1.5 md:gap-2 bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 rounded-xl px-2.5 sm:px-3 md:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs md:text-sm font-medium shadow-sm transition-all h-[35px] md:h-[37.33px] whitespace-nowrap"
             >
               <span className="hidden sm:inline">Customize</span>
               <i className="bi bi-sliders2" style={{ '--bi-stroke-width': '1.8px' }}></i>
@@ -865,14 +865,14 @@ export default function DRList() {
         </div>
 
         {/* Desktop Table View */}
-        <div className="hidden lg:block">
-          <table className="min-w-[1300px] w-full text-left border-collapse text-[14.4px]">
+        <div className="hidden lg:block overflow-x-auto">
+          <table className="min-w-full w-full text-left border-collapse text-[12px] md:text-[14.4px]">
             <thead className="bg-[#0B102A] text-white font-bold sticky top-0" style={{ zIndex: 50 }}>
-              <tr className="h-[50px]">
+              <tr className="h-[45px] md:h-[50px]">
                 {visibleColumns.dr && (
-                  <th rowSpan={2} colSpan={visibleColumns.star ? 2 : 1} className="py-4 px-3 text-left sticky top-0 bg-[#0B102A] align-middle cursor-pointer relative" style={{ left: "0px", width: visibleColumns.star ? "195px" : "155px", minWidth: visibleColumns.star ? "195px" : "155px", zIndex: 110 }} onClick={() => handleSort("dr")}>
-                    <div className="flex items-center gap-0.5">
-                      <span className={visibleColumns.star ? "pl-8" : ""}>DR</span>
+                  <th rowSpan={2} colSpan={visibleColumns.star ? 2 : 1} className="py-2 md:py-4 px-2 md:px-3 text-left sticky top-0 bg-[#0B102A] align-middle cursor-pointer relative text-xs md:text-sm" style={{ left: "0px", width: visibleColumns.star ? "160px" : "130px", minWidth: visibleColumns.star ? "160px" : "130px", zIndex: 110 }} onClick={() => handleSort("dr")}>
+                  <div className="flex items-center gap-0.5 text-xs md:text-sm">
+                      <span className={visibleColumns.star ? "pl-6 md:pl-8" : ""}>DR</span>
                       <SortIndicator colKey="dr" />
                     </div>
                     {sortConfig.key === "dr" && (
@@ -882,18 +882,18 @@ export default function DRList() {
                     )}
                   </th>
                 )}
-                {visibleTradingCount > 0 && <th colSpan={visibleTradingCount} className="py-3 text-center bg-[#020323]">Trading information</th>}
-                {visibleFundamentalCount > 0 && <th colSpan={visibleFundamentalCount} className="py-3 text-center bg-[#020323] border-l border-gray-200">Basic DR information</th>}
+                {visibleTradingCount > 0 && <th colSpan={visibleTradingCount} className="py-2 md:py-3 px-2 md:px-4 text-center text-xs md:text-sm bg-[#020323]">Trading information</th>}
+                {visibleFundamentalCount > 0 && <th colSpan={visibleFundamentalCount} className="py-2 md:py-3 px-2 md:px-4 text-center text-xs md:text-sm bg-[#020323] border-l border-gray-200">Basic DR information</th>}
               </tr>
-              <tr className="h-[50px]">
+              <tr className="h-[45px] md:h-[50px]">
                 {[...tradingKeys, ...fundamentalKeys].map(key => visibleColumns[key] && (
                   <th 
                     key={key} 
-                    className={`py-3 px-4 ${textCols.includes(key) ? "text-left" : "text-right"} bg-[#1C1D39] border-b border-gray-200 whitespace-nowrap cursor-pointer relative ${fundamentalKeys.includes(key) && key === firstVisibleFundamentalKey ? 'border-l border-gray-200' : ''}`}
-                    style={key === "securityTypeName" ? { minWidth: 360 } : undefined}
+                    className={`py-2 md:py-3 px-2 md:px-4 text-xs md:text-sm ${textCols.includes(key) ? "text-left" : "text-right"} bg-[#1C1D39] border-b border-gray-200 whitespace-nowrap cursor-pointer relative ${fundamentalKeys.includes(key) && key === firstVisibleFundamentalKey ? 'border-l border-gray-200' : ''}`}
+                    style={key === "securityTypeName" ? { minWidth: 280 } : undefined}
                     onClick={() => handleSort(key)}
                   >
-                    <div className={`flex items-center ${textCols.includes(key) ? "justify-start" : "justify-end"} gap-0.5`}>
+                    <div className={`flex items-center text-xs md:text-sm ${textCols.includes(key) ? "justify-start" : "justify-end"} gap-0.5`}>
                       {key === "open" && "Open"}{key === "high" && "High"}{key === "low" && "Low"}{key === "last" && "Last"}{key === "change" && "Change"}{key === "pct" && "%Change"}{key === "bid" && "Bid"}{key === "offer" && "Offer"}{key === "vol" && "Volume"}{key === "value" && "Value('000)"}{key === "tradingSession" && "Trading Session"}
                       {key === "issuerName" && "Issuer"}{key === "marketCap" && "Market Cap (M)"}{key === "ytdChange" && "Change (YTD)"}{key === "ytdPercentChange" && "%Change (YTD)"}{key === "underlyingName" && "Underlying"}{key === "conversionRatio" && "Ratio"}{key === "divYield" && "Div. Yield"}{key === "exchange" && "Underlying Exchange"}{key === "securityTypeName" && "Foreign Security Type"}{key === "outstandingShare" && "Outstanding Share"}
                       <SortIndicator colKey={key} />
