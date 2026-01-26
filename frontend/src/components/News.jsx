@@ -430,8 +430,8 @@ const News = () => {
                   <div className="animate-pulse h-48 bg-gray-200 rounded-2xl" />
                 ) : topStory ? (
                   <a href={topStory.news.url} target="_blank" rel="noreferrer" className="block group">
-                    <div className="bg-[#0B102A] rounded-2xl px-8 py-6 text-white relative overflow-hidden shadow-lg">
-                      <div className="relative z-10 max-w-3xl">
+                    <div className="bg-[#0B102A] rounded-2xl px-5 sm:px-7 md:px-8 py-4 sm:py-5 md:py-6 text-white relative overflow-hidden shadow-lg">
+                      <div className="relative z-10 max-w-3xl pr-20 sm:pr-28 md:pr-36">
                         {topStory.ticker && topStory.quote && (
                           <div className="flex items-center gap-3 mb-3">
                             <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
@@ -453,11 +453,15 @@ const News = () => {
                           {timeAgo(topStory.news.published_at)}
                         </div>
                       </div>
-                      <div className="absolute right-8 top-1/2 transform -translate-y-1/2">
+                      <div className="absolute right-4 sm:right-6 md:right-8 top-1/2 transform -translate-y-1/2">
                         {topStory.quote && topStory.quote.logo_url ? (
-                          <img src={topStory.quote.logo_url} alt="background" className="w-[96px] h-[96px] object-contain" />
+                          <img
+                            src={topStory.quote.logo_url}
+                            alt="background"
+                            className="w-[64px] h-[64px] sm:w-[80px] sm:h-[80px] md:w-[96px] md:h-[96px] object-contain"
+                          />
                         ) : (
-                          <i className="bi bi-newspaper text-[72px] md:text-[96px]"></i>
+                          <i className="bi bi-newspaper text-[48px] sm:text-[72px] md:text-[96px]"></i>
                         )}
                       </div>
                     </div>

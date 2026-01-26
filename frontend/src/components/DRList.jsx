@@ -996,7 +996,9 @@ export default function DRList() {
 
   const renderTabs = () => {
     const handleMouseEnter = (tabType, e) => {
-      const rect = e.currentTarget.getBoundingClientRect();
+      const target = e.currentTarget;
+      if (!target || !target.getBoundingClientRect) return;
+      const rect = target.getBoundingClientRect();
       setTooltipPosition({ x: rect.left + rect.width / 2, y: rect.top });
       setHoveredTab(tabType);
     };
@@ -1010,15 +1012,19 @@ export default function DRList() {
         <div className="flex gap-3 sm:gap-4 relative overflow-x-auto w-full sm:w-auto pb-0 sm:pb-0">
           <button className={`pb-1 whitespace-nowrap text-sm sm:text-base ${tab === "all" ? "border-b-2 border-black font-semibold" : ""}`} onClick={() => setTab("all")}>All</button>
           <button
-            className={`pb-1 relative flex items-center gap-1.5 whitespace-nowrap text-sm sm:text-base ${tab === "popular" ? "border-b-2 border-black font-semibold" : ""}`}
-            onClick={() => setTab("popular")}
+            className={`pb-1 relative flex items-center gap-1.5 whitespace-nowrap text-sm sm:text-base cursor-pointer ${tab === "popular" ? "border-b-2 border-black font-semibold" : ""}`}
+            onClick={(e) => {
+              setTab("popular");
+            }}
             onMouseEnter={(e) => handleMouseEnter("popular", e)}
             onMouseLeave={handleMouseLeave}
+            onPointerEnter={(e) => handleMouseEnter("popular", e)}
+            onPointerLeave={handleMouseLeave}
           >
-            Most Popular
+            <span onClick={() => setTab("popular")}>Most Popular</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 text-gray-500 mt-0.5 hidden sm:block"
+              className="h-4 w-4 text-gray-500 mt-0.5 cursor-help"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -1027,15 +1033,19 @@ export default function DRList() {
             </svg>
           </button>
           <button
-            className={`pb-1 relative flex items-center gap-1.5 whitespace-nowrap text-sm sm:text-base ${tab === "sensitivity" ? "border-b-2 border-black font-semibold" : ""}`}
-            onClick={() => setTab("sensitivity")}
+            className={`pb-1 relative flex items-center gap-1.5 whitespace-nowrap text-sm sm:text-base cursor-pointer ${tab === "sensitivity" ? "border-b-2 border-black font-semibold" : ""}`}
+            onClick={(e) => {
+              setTab("sensitivity");
+            }}
             onMouseEnter={(e) => handleMouseEnter("sensitivity", e)}
             onMouseLeave={handleMouseLeave}
+            onPointerEnter={(e) => handleMouseEnter("sensitivity", e)}
+            onPointerLeave={handleMouseLeave}
           >
-            High Sensitivity
+            <span onClick={() => setTab("sensitivity")}>High Sensitivity</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 text-gray-500 mt-0.5 hidden sm:block"
+              className="h-4 w-4 text-gray-500 mt-0.5 cursor-help"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -1164,10 +1174,10 @@ export default function DRList() {
       {renderSettingsModal()}
       {renderDetailModal()}
 
-      {/* Tooltip - Hidden on mobile */}
+      {/* Tooltip - Show on all devices */}
       {hoveredTab && (
         <div
-          className="fixed z-[10000] pointer-events-none hidden sm:block"
+          className="fixed z-[10000] pointer-events-none block"
           style={{
             left: `${tooltipPosition.x}px`,
             top: `${tooltipPosition.y}px`,
@@ -1181,7 +1191,7 @@ export default function DRList() {
             }`}></div>
 
           {/* Main Tooltip */}
-          <div className="relative px-5 py-4 rounded-xl backdrop-blur-md bg-gradient-to-br from-white/95 via-white/90 to-white/85 border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.12)] max-w-md">
+          <div className="relative px-3 sm:px-5 py-2.5 sm:py-4 rounded-xl backdrop-blur-md bg-gradient-to-br from-white/95 via-white/90 to-white/85 border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.12)] max-w-xs sm:max-w-md">
             {/* Shine Effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent rounded-xl pointer-events-none"></div>
 
@@ -1190,8 +1200,8 @@ export default function DRList() {
               {hoveredTab === "popular" && (
                 <div className="text-center">
                   {/* Title */}
-                  <div className="font-bold text-gray-900 mb-2 text-base bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Most Popular DR</div>
-                  <div className="text-sm text-gray-700 leading-relaxed space-y-1">
+                  <div className="font-bold text-gray-900 mb-1.5 sm:mb-2 text-sm sm:text-base bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Most Popular DR</div>
+                  <div className="text-xs sm:text-sm text-gray-700 leading-relaxed space-y-0.5 sm:space-y-1">
                     <div>จัดอันดับ DR ที่ได้รับความนิยมสูงสุดในแต่ละ Underlying</div>
                     <div>โดยวัดจากปริมาณการซื้อขาย <span className="font-semibold text-green-600">(Volume)</span> ที่มากที่สุด</div>
                   </div>
@@ -1200,8 +1210,8 @@ export default function DRList() {
               {hoveredTab === "sensitivity" && (
                 <div className="text-center">
                   {/* Title */}
-                  <div className="font-bold text-gray-900 mb-2 text-base bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">High Sensitivity DR</div>
-                  <div className="text-sm text-gray-700 leading-relaxed space-y-1">
+                  <div className="font-bold text-gray-900 mb-1.5 sm:mb-2 text-sm sm:text-base bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">High Sensitivity DR</div>
+                  <div className="text-xs sm:text-sm text-gray-700 leading-relaxed space-y-0.5 sm:space-y-1">
                     <div>จัดอันดับ DR ที่มีความเคลื่อนไหวโดดเด่นที่สุดในแต่ละ Underlying</div>
                     <div>โดยวัดจากราคาเสนอซื้อ <span className="font-semibold text-blue-600">(Bid)</span> ที่ต่ำที่สุด</div>
                   </div>

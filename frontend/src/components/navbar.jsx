@@ -102,9 +102,9 @@ const Navbar = () => {
 
   return (
     <header className="bg-white sticky top-0 z-[110] shadow-sm border-b border-gray-200">
-      {/* Desktop view - unchanged */}
-      <div className="hidden lg:block w-full max-w-full lg:max-w-[1040px] mx-auto lg:scale-[1.2] lg:origin-top px-0 md:px-4 py-5">
-        <div className="flex items-center justify-between">
+      {/* Desktop view - inline navigation items */}
+      <div className="hidden lg:block w-full px-4 py-5">
+        <div className="flex items-center gap-8">
           {/* Logo */}
           <div
             className="cursor-pointer shrink-0"
@@ -117,10 +117,10 @@ const Navbar = () => {
             />
           </div>
 
-          {/* Navigation menu */}
-          <nav className="flex items-center gap-8">
-            <Link
-              to="/drlist"
+          {/* Navigation items as inline titles */}
+          <div className="flex items-center gap-6 ml-auto pr-4">
+            <button
+              onClick={() => navigate('/drlist')}
               className={`flex items-center gap-2 text-sm font-medium transition-colors ${
                 location.pathname === '/' || isActive('/drlist')
                   ? 'text-blue-500'
@@ -129,26 +129,26 @@ const Navbar = () => {
             >
               <DRListIcon className="w-5 h-5" />
               DR List
-            </Link>
+            </button>
 
-            <Link
-              to="/caldr"
+            <button
+              onClick={() => navigate('/caldr')}
               className={`flex items-center gap-2 text-sm font-medium transition-colors ${isActive('/caldr') ? 'text-blue-500' : 'text-gray-700 hover:text-gray-900'}`}
             >
               <CalDRIcon className="w-5 h-5" />
               Calculation DR
-            </Link>
+            </button>
 
-            <Link
-              to="/suggestion"
+            <button
+              onClick={() => navigate('/suggestion')}
               className={`flex items-center gap-2 text-sm font-medium transition-colors ${isActive('/suggestion') ? 'text-blue-500' : 'text-gray-700 hover:text-gray-900'}`}
             >
               <SuggestionIcon className="w-5 h-5" />
               Suggestion
-            </Link>
+            </button>
 
-            <Link
-              to="/calendar"
+            <button
+              onClick={() => navigate('/calendar')}
               className={`flex items-center gap-2 text-sm font-medium transition-colors relative ${isActive('/calendar') ? 'text-blue-500' : 'text-gray-700 hover:text-gray-900'}`}
             >
               <CalendarIcon className="w-5 h-5" />
@@ -159,16 +159,16 @@ const Navbar = () => {
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
                 </span>
               )}
-            </Link>
+            </button>
 
-            <Link
-              to="/news"
+            <button
+              onClick={() => navigate('/news')}
               className={`flex items-center gap-2 text-sm font-medium transition-colors ${isActive('/news') ? 'text-blue-500' : 'text-gray-700 hover:text-gray-900'}`}
             >
               <NewsIcon className="w-5 h-5" />
               News
-            </Link>
-          </nav>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -190,7 +190,7 @@ const Navbar = () => {
           {/* Hamburger button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg"
+            className="p-3 -mr-3 text-gray-700 hover:text-gray-900 rounded-lg relative z-[102]"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? (
