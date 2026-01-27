@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback, useTransition, useRef } from "react";
+import React, { useState, useEffect, useLayoutEffect, useMemo, useCallback, useTransition, useRef } from "react";
 import swipeImg from "../assets/swipe.png";
 
 const API_URL = import.meta.env.VITE_DR_LIST_API;
@@ -150,6 +150,56 @@ export default function DRList() {
   /* TAB TOOLTIP */
   const [hoveredTab, setHoveredTab] = useState(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const tooltipRef = useRef(null);
+  const [tooltipClampedX, setTooltipClampedX] = useState(null);
+  const [tooltipArrowX, setTooltipArrowX] = useState(null);
+
+  // Use layout effect to avoid 1-frame overflow flicker on hover
+  useLayoutEffect(() => {
+    if (!hoveredTab) {
+      setTooltipClampedX(null);
+      setTooltipArrowX(null);
+      return;
+    }
+
+    const clampX = () => {
+      const el = tooltipRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const margin = 12;
+      const viewportW = window.innerWidth || document.documentElement.clientWidth || rect.width;
+      const halfW = rect.width / 2;
+      const desiredX = tooltipPosition.x;
+
+      const clamped = Math.min(
+        Math.max(desiredX, margin + halfW),
+        viewportW - margin - halfW
+      );
+
+      setTooltipClampedX((prev) => (prev === clamped ? prev : clamped));
+
+      // Arrow should still point to the hovered tab center even when tooltip is clamped
+      // Compute arrow's X (in px) relative to tooltip left edge:
+      // tooltipLeftEdge = tooltipCenterX - halfW
+      // arrowX = desiredX - tooltipLeftEdge
+      const arrowEdgeMargin = 18; // keep arrow away from rounded corners
+      const arrowX = Math.min(
+        Math.max(desiredX - clamped + halfW, arrowEdgeMargin),
+        rect.width - arrowEdgeMargin
+      );
+      setTooltipArrowX((prev) => (prev === arrowX ? prev : arrowX));
+    };
+
+    // Run immediately (before paint), then keep in sync on resize
+    clampX();
+    const onResize = () => window.requestAnimationFrame(clampX);
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, [hoveredTab, tooltipPosition.x]);
 
   /* LAST UPDATED */
   const [lastUpdated, setLastUpdated] = useState(null);
@@ -1177,9 +1227,10 @@ export default function DRList() {
       {/* Tooltip - Show on all devices */}
       {hoveredTab && (
         <div
+          ref={tooltipRef}
           className="fixed z-[10000] pointer-events-none block"
           style={{
-            left: `${tooltipPosition.x}px`,
+            left: `${(tooltipClampedX ?? tooltipPosition.x)}px`,
             top: `${tooltipPosition.y}px`,
             transform: 'translate(-50%, calc(-100% - 12px))',
             animation: 'tooltipFadeIn 0.2s ease-out'
@@ -1191,7 +1242,7 @@ export default function DRList() {
             }`}></div>
 
           {/* Main Tooltip */}
-          <div className="relative px-3 sm:px-5 py-2.5 sm:py-4 rounded-xl backdrop-blur-md bg-gradient-to-br from-white/95 via-white/90 to-white/85 border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.12)] max-w-xs sm:max-w-md">
+          <div className="relative px-3 sm:px-5 py-2.5 sm:py-4 rounded-xl backdrop-blur-md bg-gradient-to-br from-white/95 via-white/90 to-white/85 border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.12)] max-w-[calc(100vw-24px)] sm:max-w-md">
             {/* Shine Effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent rounded-xl pointer-events-none"></div>
 
@@ -1221,7 +1272,13 @@ export default function DRList() {
           </div>
 
           {/* Arrow */}
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-px">
+          <div
+            className="absolute top-full -mt-px"
+            style={{
+              left: tooltipArrowX != null ? `${tooltipArrowX}px` : "50%",
+              transform: "translateX(-50%)",
+            }}
+          >
             <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-white/90"></div>
           </div>
         </div>
