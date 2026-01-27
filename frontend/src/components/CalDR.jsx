@@ -611,17 +611,19 @@ const dynamicSpreadPct = useMemo(() => {
                 <p className="font-bold text-[11px] sm:text-[12px] lg:text-[13px] text-[#6B6B6B] break-words">Ratio (DR : Underlying)</p>
                 <p className="font-bold text-lg sm:text-xl lg:text-2xl text-[#111] mt-1">{ratioDR ? `${fmtNum(ratioDR, 0)} : 1` : "—"} </p>
                 <div className="w-full h-[1px] bg-[#9A9A9A] mt-2"></div>
-                <div className="flex w-full flex-row items-start sm:items-center justify-between mt-3 gap-3 lg:gap-0">
-                  <div className="w-1/2 lg:w-1/2 min-w-0">
-                    <p className="font-bold text-[11px] sm:text-[12px] lg:text-[13px] text-[#6B6B6B] mt-1 break-words">Last Price</p>
-                    <p className="font-bold text-lg sm:text-xl lg:text-2xl mt-1">{selectedDR?.last ? fmtNum(selectedDR.last) : "—"}</p>
-                  </div>
-                  <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 w-[1px] h-[56px] bg-[#9A9A9A]"></div>
-                  <div className="w-1/2 lg:w-1/2 min-w-0 border-l border-[#9A9A9A] pl-3 sm:pl-4 lg:border-l-0 lg:pl-6">
-                    <p className="font-bold text-[11px] sm:text-[12px] lg:text-[13px] text-[#6B6B6B] mt-1 break-words">Change</p>
-                    <p className={`font-bold text-lg sm:text-xl lg:text-2xl mt-1 ${changeAbs > 0 ? "text-[#27AE60]" : changeAbs < 0 ? "text-[#EB5757]" : "text-black"}`}>
-                      {`${fmtNum(changeAbs)} (${fmtPct(changePct)})`}
-                    </p>
+                <div className="flex flex-col lg:flex-row items-center mt-3 gap-3 lg:gap-0">
+                  <div className="flex flex-row items-center w-full">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-[11px] sm:text-[12px] lg:text-[13px] text-[#6B6B6B] mt-1 break-words">Last Price</p>
+                      <p className="font-bold text-lg sm:text-xl lg:text-2xl mt-1 whitespace-nowrap">{selectedDR?.last ? fmtNum(selectedDR.last) : "—"}</p>
+                    </div>
+                    <div className="mx-3 w-[1px] h-8 bg-[#9A9A9A]"></div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-[11px] sm:text-[12px] lg:text-[13px] text-[#6B6B6B] mt-1 break-words">Change</p>
+                      <p className={`font-bold text-lg sm:text-xl lg:text-2xl mt-1 whitespace-nowrap ${changeAbs > 0 ? "text-[#27AE60]" : changeAbs < 0 ? "text-[#EB5757]" : "text-black"}`}>
+                        {`${fmtNum(changeAbs)} (${fmtPct(changePct)})`}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

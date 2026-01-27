@@ -1158,7 +1158,12 @@
         </div>
 
         {/* Tooltip */}
-        <Tooltip show={hoveredRow !== null} position={tooltipPosition}>
+        {/* Desktop: hover, Mobile: click */}
+        <Tooltip
+          show={window.innerWidth >= 640 ? hoveredRow !== null : mobileTooltipRow !== null}
+          position={tooltipPosition}
+          tooltipRef={tooltipRef}
+        >
           Click to view rating history
         </Tooltip>
 
